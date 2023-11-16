@@ -1,6 +1,6 @@
 import { fetchIdMovie } from 'api';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 
 export default function MovieDetails() {
   const { movieId } = useParams();
@@ -20,23 +20,37 @@ export default function MovieDetails() {
     fetchData();
   }, [movieId]);
 
-  const defaultImg = 
+  const { poster_path, title, vote_average, overview, genres, release_date } = movies;
+  const allGenres = genres ? genres.map(genre => genre.name).join(', ') : [];
+  const releaseYear = release_date ? `(${release_date.substring(0, 4)})` : "";
+
   return (
     <div>
-      <img src={
-                    movies.poster_path
-                        ? `https://image.tmdb.org/t/p/w500/${movies.poster_path}`
-                        : defaultImg
-                }
-                    width={250}
-                    alt="poster"
-                />
+      <img
+        src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+        width={250}
+        alt={title}
+        loading='lazy'
+      />
       <div>
-        <h2>{movies.title}</h2>
-        <p>Rating: {movies.vote_average}</p>
+        <h2>{title} {releaseYear}</h2>
+        <p>User Score: {Math.round(vote_average*10) ?? 'No User Score'}%</p>
         <h3>Overview</h3>
-        <p>{movies.overview}</p>
+        <p>{overview !== '' ? overview : 'No overview provided'}</p>
         <h3>Genres</h3>
+        <p>{allGenres !== '' ? allGenres : 'No genres'}</p>
+      </div>
+      <div>
+        <h2>Adittional information</h2>
+        <ul>
+          <li>
+            <Link to="cast">Cast</Link>
+          </li>
+          <li>
+            <Link to="reviews">Reviews</Link>
+          </li>
+        </ul>
+        <Outlet />
       </div>
     </div>
   );
