@@ -1,6 +1,5 @@
 import { fetchCast } from 'api';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function Cast() {

@@ -4,7 +4,6 @@ import {MoviesList} from 'components/MoviesList'
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
-  console.log(movies)
 
   useEffect(() => {
     const fetchData = async () => {
