@@ -1,22 +1,20 @@
-import { Outlet } from "react-router-dom";
-import { Link } from "./SharedLayout.styled";
+import { Outlet } from 'react-router-dom';
+import { Container, Header, Link, Nav } from './SharedLayout.styled';
+import { Suspense } from 'react';
+import { Loader } from 'components/Loader/Loader';
 
 export const SharedLayout = () => {
   return (
-    <div>
-      <header>
-        <p>
-          <span role="img" aria-label="computer icon">
-            💻
-          </span>{' '}
-          GoMerch Store
-        </p>
-        <nav>
+    <Container>
+      <Header>
+        <Nav>
           <Link to="/">Home</Link>
           <Link to="/movies">Movies</Link>
-        </nav>
-      </header>
-      <Outlet />
-    </div>
+        </Nav>
+      </Header>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
+    </Container>
   );
 };
