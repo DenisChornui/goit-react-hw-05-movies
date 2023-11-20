@@ -17,7 +17,7 @@ export default function MovieDetails() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const location = useLocation();
-  const backLinkHref = useRef(location.state?.from ?? '/');
+  const backLinkHref = useRef(location.state?.from ?? '/Movies');
 
   useEffect(() => {
     if (!movieId) return;
