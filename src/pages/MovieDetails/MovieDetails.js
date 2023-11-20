@@ -2,7 +2,7 @@ import { fetchIdMovie } from 'api';
 import { BackLink } from 'components/BackLink/BackLink';
 import { ErrorMessage } from 'components/ErrorMessage';
 import { Loader } from 'components/Loader/Loader';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   AdittionalContainer,
@@ -17,7 +17,7 @@ export default function MovieDetails() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/Movies';
+  const backLinkHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     if (!movieId) return;
@@ -44,7 +44,7 @@ export default function MovieDetails() {
 
   return (
     <>
-      <BackLink to={backLinkHref}></BackLink>
+      <BackLink to={backLinkHref.current}></BackLink>
       <Container>
         {loading && <Loader />}
         {error && (
